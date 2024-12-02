@@ -1,14 +1,14 @@
 package com.tercerotest.controller.dao.services;
 
-import com.tercerotest.controller.dao.PersonaDao;
+import com.tercerotest.controller.dao.CasaDao;
 import com.tercerotest.controller.tda.list.LinkedList;
 import com.tercerotest.models.Persona;
 import com.tercerotest.models.enumerator.TipoIdentificacion;
 
 public class PersonaServices {
-    private PersonaDao obj;
+    private CasaDao obj;
     public PersonaServices() {
-        obj = new PersonaDao();
+        obj = new CasaDao();
     }
     public Boolean save() throws Exception {
         return obj.save();

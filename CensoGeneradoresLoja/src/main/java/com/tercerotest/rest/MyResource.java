@@ -14,7 +14,7 @@ import org.apache.commons.math3.stat.descriptive.summary.Product;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.tercerotest.controller.dao.PersonaDao;
+import com.tercerotest.controller.dao.CasaDao;
 import com.tercerotest.controller.dao.services.PersonaServices;
 import com.tercerotest.controller.tda.list.LinkedList;
 import com.tercerotest.models.Persona;

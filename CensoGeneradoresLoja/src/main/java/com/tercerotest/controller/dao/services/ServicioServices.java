@@ -1,16 +1,12 @@
 package com.tercerotest.controller.dao.services;
 
-import java.util.HashMap;
-
-import com.tercerotest.controller.dao.ServicioDao;
+import com.tercerotest.controller.dao.GeneradorDao;
 import com.tercerotest.controller.tda.list.LinkedList;
 import com.tercerotest.models.Servicio;
-import com.tercerotest.models.Marca;
-import com.tercerotest.models.Persona;
 
 
 public class ServicioServices {
-    private ServicioDao obj;
+    private GeneradorDao obj;
     public LinkedList listAll() {
         return obj.getListAll();
     }
@@ -36,7 +32,7 @@ public class ServicioServices {
         return new Object[]{};
     }*/
     public ServicioServices() {
-        obj = new ServicioDao();
+        obj = new GeneradorDao();
     }
     public Boolean save() throws Exception {
         return obj.save();

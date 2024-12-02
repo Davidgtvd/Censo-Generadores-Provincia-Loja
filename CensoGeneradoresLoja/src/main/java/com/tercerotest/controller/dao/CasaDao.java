@@ -1,17 +1,15 @@
 package com.tercerotest.controller.dao;
 
-import java.util.function.ToIntBiFunction;
-
 import com.tercerotest.controller.dao.implement.AdapterDao;
 import com.tercerotest.controller.tda.list.LinkedList;
 import com.tercerotest.models.Persona;
 import com.tercerotest.models.enumerator.TipoIdentificacion;
 
-public class PersonaDao extends AdapterDao<Persona> {
+public class CasaDao extends AdapterDao<Persona> {
     private Persona persona;
     private LinkedList listAll;
 
-    public PersonaDao() {
+    public CasaDao() {
         super(Persona.class);
     }
 

@@ -1,10 +1,13 @@
-package com.tercerotest.controller.dao.implement;
+package com.lojageneradores.censo.dao.implement;
 
-import com.tercerotest.controller.tda.list.LinkedList;
+import com.lojageneradores.censo.tda.list.LinkedList;
 
-public interface IntefazDao <T> {
-    public void persist(T object) throws Exception;
-    public void merge(T object, Integer index) throws Exception;
-    public LinkedList<T> listAll();
-    public T get(Integer id) throws Exception;
+public interface IntefazDao<T> {
+    void persist(T object) throws Exception;
+
+    void merge(T object, Integer index) throws Exception;
+
+    LinkedList<T> listAll();
+
+    T get(Integer id) throws Exception;
 }

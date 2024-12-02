@@ -1,51 +1,45 @@
-package com.tercerotest.rest;
+package com.lojageneradores.censo;
 
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
-
 import java.io.IOException;
 import java.net.URI;
 
 /**
- * Main class.
- *
+ * Clase principal para el censo de generadores en Loja.
  */
 public class Main {
-    // Base URI the Grizzly HTTP server will listen on
-    public static final String BASE_URI = "http://localhost:8099/api/";
+    // Base URI donde el servidor escuchará
+    public static final String BASE_URI = "http://localhost:8090/api/";
 
     /**
-     * Starts Grizzly HTTP server exposing JAX-RS resources defined in this
-     * application.
-     * 
-     * @return Grizzly HTTP server.
+     * Inicia el servidor HTTP Grizzly y expone los recursos definidos en la aplicación.
+     *
+     * @return Servidor HTTP Grizzly.
      */
     public static HttpServer startServer() {
-        // create a resource config that scans for JAX-RS resources and providers
-        // in com.tercerotest.rest package
-        final ResourceConfig rc = new ResourceConfig().packages("com.tercerotest.rest");
+        // Configuración del recurso que escanea el paquete REST
+        final ResourceConfig rc = new ResourceConfig().packages("com.lojageneradores.censo.rest");
 
-        // create and start a new instance of grizzly http server
-        // exposing the Jersey application at BASE_URI
+        // Crear y arrancar un nuevo servidor HTTP en BASE_URI
         return GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), rc);
     }
 
     /**
-     * Main method.
-     * 
-     * @param args
-     * @throws IOException
+     * Método principal.
+     *
+     * @param args Argumentos de línea de comandos.
+     * @throws IOException En caso de error al iniciar el servidor.
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         try {
             final HttpServer server = startServer();
-            System.out.println(String.format("Jersey app started with WADL available at "
-                    + "%sapplication.wadl\nHit enter to stop it...", BASE_URI));
+            System.out.println(String.format("Aplicación iniciada en %s\nPresione Enter para detenerla...", BASE_URI));
             System.in.read();
             server.stop();
         } catch (Exception ex) {
-            System.out.println("Error en el servidor "+ex);
+            System.out.println("Error al iniciar el servidor: " + ex.getMessage());
         }
     }
 }
