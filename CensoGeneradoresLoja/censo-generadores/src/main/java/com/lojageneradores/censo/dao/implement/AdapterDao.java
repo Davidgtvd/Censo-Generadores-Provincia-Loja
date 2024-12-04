@@ -4,16 +4,17 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.lojageneradores.censo.tda.list.LinkedList;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.lang.reflect.Method;
 
 public class AdapterDao<T> implements IntefazDao<T> {
-    private Class clazz;
-    private Gson gson;
-    public static String URL = "media/";
+    private final Class<T> clazz;
+    private final Gson gson;
+    public static final String URL = "media/";
 
-    public AdapterDao(Class clazz) {
+    public AdapterDao(Class<T> clazz) {
         this.clazz = clazz;
         this.gson = new GsonBuilder().setPrettyPrinting().create();
     }
@@ -22,9 +23,8 @@ public class AdapterDao<T> implements IntefazDao<T> {
     public T get(Integer id) throws Exception {
         LinkedList<T> list = listAll();
         if (!list.isEmpty()) {
-            T[] items = list.toArray();
-            for (T item : items) {
-                if (getId(item).intValue() == id.intValue()) {
+            for (T item : list.toArray()) {
+                if (getId(item).equals(id)) {
                     return item;
                 }
             }
@@ -53,7 +53,7 @@ public class AdapterDao<T> implements IntefazDao<T> {
                 return (Integer) method.invoke(obj);
             }
         } catch (Exception e) {
-            return -1; // Devuelve -1 si ocurre algún error
+            System.err.println("Error al obtener el ID: " + e.getMessage());
         }
         return -1;
     }
@@ -64,11 +64,11 @@ public class AdapterDao<T> implements IntefazDao<T> {
         try {
             String data = readFile();
             if (data != null && !data.isEmpty()) {
-                T[] items = (T[]) gson.fromJson(data, java.lang.reflect.Array.newInstance(clazz, 0).getClass());
+                T[] items = gson.fromJson(data, (Class<T[]>) java.lang.reflect.Array.newInstance(clazz, 0).getClass());
                 list.toList(items);
             }
         } catch (Exception e) {
-            System.out.println("Error al leer los datos: " + e.getMessage());
+            System.err.println("Error al listar los datos: " + e.getMessage());
         }
         return list;
     }
@@ -77,21 +77,23 @@ public class AdapterDao<T> implements IntefazDao<T> {
     public void merge(T object, Integer index) throws Exception {
         LinkedList<T> list = listAll();
         list.update(object, index);
-        String json = gson.toJson(list.toArray());
-        saveFile(json);
+        saveFile(gson.toJson(list.toArray()));
     }
 
     @Override
     public void persist(T object) throws Exception {
         LinkedList<T> list = listAll();
         list.add(object);
-        String json = gson.toJson(list.toArray());
-        saveFile(json);
+        saveFile(gson.toJson(list.toArray()));
     }
 
     private String readFile() throws Exception {
+        File file = new File(URL + clazz.getSimpleName() + ".json");
+        if (!file.exists()) {
+            return "";
+        }
         StringBuilder sb = new StringBuilder();
-        try (FileReader fr = new FileReader(URL + clazz.getSimpleName() + ".json")) {
+        try (FileReader fr = new FileReader(file)) {
             int ch;
             while ((ch = fr.read()) != -1) {
                 sb.append((char) ch);
@@ -101,6 +103,10 @@ public class AdapterDao<T> implements IntefazDao<T> {
     }
 
     private void saveFile(String data) throws Exception {
+        File dir = new File(URL);
+        if (!dir.exists() && !dir.mkdirs()) {
+            throw new Exception("No se pudo crear el directorio: " + URL);
+        }
         try (FileWriter fw = new FileWriter(URL + clazz.getSimpleName() + ".json")) {
             fw.write(data);
         }

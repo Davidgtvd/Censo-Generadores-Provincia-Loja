@@ -1,16 +1,40 @@
 package com.loja.censogeneradores.tda.list;
 
-public class LinkedList<T> {
-    private Node<T> head; // Primer nodo de la lista
-    private int size; // Tamaño de la lista
+class Node<T> {
+    private T data;  
+    private Node<T> next;  
 
+    public Node(T data) {
+        this.data = data;
+        this.next = null;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
+
+    public Node<T> getNext() {
+        return next;
+    }
+
+    public void setNext(Node<T> next) {
+        this.next = next;
+    }
+}
+
+public class LinkedList<T> {
+    private Node<T> head; 
+    private int size; 
     // Constructor
     public LinkedList() {
         head = null;
         size = 0;
     }
 
-    // Método para agregar un elemento al final de la lista
     public void add(T data) {
         Node<T> newNode = new Node<>(data);
         if (head == null) {
@@ -25,12 +49,10 @@ public class LinkedList<T> {
         size++;
     }
 
-    // Método para obtener el tamaño de la lista
     public int size() {
         return size;
     }
 
-    // Método para convertir la lista a un arreglo
     public T[] toArray() {
         T[] array = (T[]) new Object[size];
         Node<T> current = head;
@@ -42,7 +64,6 @@ public class LinkedList<T> {
         return array;
     }
 
-    // Método para obtener el nodo en un índice específico
     public T get(int index) {
         if (index < 0 || index >= size) {
             return null;
@@ -54,7 +75,6 @@ public class LinkedList<T> {
         return current.getData();
     }
 
-    // Método para eliminar un elemento de la lista (por ejemplo, si ya no se censa una casa)
     public void remove(int index) {
         if (index < 0 || index >= size) {
             return;
@@ -69,5 +89,33 @@ public class LinkedList<T> {
             current.setNext(current.getNext().getNext());
         }
         size--;
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    public void reset() {
+        head = null;
+        size = 0;
+    }
+
+    public void toList(T[] items) {
+        head = null;
+        size = 0;
+        for (T item : items) {
+            add(item);
+        }
+    }
+
+    public void update(T object, int index) {
+        if (index < 0 || index >= size) {
+            return;
+        }
+        Node<T> current = head;
+        for (int i = 0; i < index; i++) {
+            current = current.getNext();
+        }
+        current.setData(object);
     }
 }

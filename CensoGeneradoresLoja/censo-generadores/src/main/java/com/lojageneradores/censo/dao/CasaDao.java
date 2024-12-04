@@ -7,7 +7,7 @@ import com.tercerotest.models.enumerator.TipoIdentificacion;
 
 public class CasaDao extends AdapterDao<Casa> {
     private Casa persona;
-    private LinkedList listAll;
+    private LinkedList<Casa> listAll;
 
     public CasaDao() {
         super(Casa.class);
@@ -24,7 +24,7 @@ public class CasaDao extends AdapterDao<Casa> {
         this.persona = persona;
     }
 
-    public LinkedList getListAll() {
+    public LinkedList<Casa> getListAll() {
         if (listAll == null) {
             this.listAll = listAll();
         }
@@ -40,7 +40,6 @@ public class CasaDao extends AdapterDao<Casa> {
     }
 
     public Boolean update() throws Exception {
-
         this.merge(getPersona(), getPersona().getId() - 1);
         this.listAll = listAll();
         return true;
@@ -54,9 +53,9 @@ public class CasaDao extends AdapterDao<Casa> {
         return TipoIdentificacion.values();
     }
 
-    public LinkedList order(Integer type_order, String atributo) {
-        LinkedList listita = listAll();
-        if (!listAll().isEmpty()) {
+    public LinkedList<Casa> order(Integer type_order, String atributo) {
+        LinkedList<Casa> listita = listAll();
+        if (!listita.isEmpty()) {
             Casa[] lista = (Casa[]) listita.toArray();
             listita.reset();
             for (int i = 1; i < lista.length; i++) {
@@ -100,9 +99,7 @@ public class CasaDao extends AdapterDao<Casa> {
         if (!listita.isEmpty()) {
             Casa[] aux = listita.toArray();
             for (int i = 0; i < aux.length; i++) {
-
                 if (aux[i].getApellidos().toLowerCase().startsWith(texto.toLowerCase())) {
-                    //System.out.println("**** "+aux[i].get);
                     lista.add(aux[i]);
                 }
             }
@@ -117,7 +114,6 @@ public class CasaDao extends AdapterDao<Casa> {
             Casa[] aux = listita.toArray();
             for (int i = 0; i < aux.length; i++) {
                 if (aux[i].getIdentificacion().equals(texto)) {
-                    //System.out.println("**** "+aux[i].get);
                     persona = aux[i];
                     break;
                 }
@@ -125,5 +121,4 @@ public class CasaDao extends AdapterDao<Casa> {
         }
         return persona;
     }
-
 }
