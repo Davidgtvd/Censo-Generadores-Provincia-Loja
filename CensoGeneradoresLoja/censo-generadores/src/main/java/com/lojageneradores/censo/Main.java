@@ -1,53 +1,46 @@
 package com.lojageneradores.censo;
 
-import java.io.IOException;
-import java.net.URI;
+import com.lojageneradores.censo.tda.utils.SortUtils;
+import com.lojageneradores.censo.tda.list.SearchUtils;
+import com.lojageneradores.censo.models.Generador;
 
-import org.glassfish.grizzly.http.server.HttpServer;
-import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
-import org.glassfish.jersey.server.ResourceConfig;
+import java.util.Arrays;
 
-/**
- * Clase principal para el censo de generadores en Loja.
- */
 public class Main {
-    
-    public static final String BASE_URI = "http://localhost:8090/api/";
+    public static void main(String[] args) {
+        
+        Generador[] generadores = {
+            new Generador("Generador A", 1000),
+            new Generador("Generador B", 750),
+            new Generador("Generador C", 1500),
+            new Generador("Generador D", 500)
+        };
 
-    /**
-     * Inicia el servidor HTTP Grizzly y expone los recursos definidos en la aplicación.
-     *
-     * @return Servidor HTTP Grizzly.
-     */
-    public static HttpServer startServer() {
-       
-        final ResourceConfig rc = new ResourceConfig().packages("com.lojageneradores.censo.rest");
+        System.out.println("Generadores originales:");
+        printArray(generadores);
 
-        return GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), rc);
+        System.out.println("\nOrdenando generadores por capacidad usando QuickSort...");
+        SortUtils.quickSort(generadores, 0, generadores.length - 1);
+        printArray(generadores);
+
+        System.out.println("\nBuscando el generador con capacidad 750...");
+        int index = SearchUtils.binarySearch(generadores, new Generador(null, 750));
+        if (index != -1) {
+            System.out.println("Generador encontrado: " + generadores[index]);
+        } else {
+            System.out.println("Generador no encontrado.");
+        }
+
+        System.out.println("\nBuscando un generador con capacidad 2000...");
+        index = SearchUtils.binarySearch(generadores, new Generador(null, 2000));
+        if (index != -1) {
+            System.out.println("Generador encontrado: " + generadores[index]);
+        } else {
+            System.out.println("Generador no encontrado.");
+        }
     }
 
-    /**
-     * Método principal.
-     *
-     * @param args Argumentos de línea de comandos.
-     * @throws IOException En caso de error al iniciar el servidor.
-     */
-    public static void main(String[] args) throws IOException {
-        final HttpServer server = startServer();
-        System.out.printf("Aplicación iniciada en %s%nPresione Enter para detenerla...%n", BASE_URI);
-
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            System.out.println("Deteniendo el servidor...");
-            server.shutdownNow();
-        }));
-
-        try {
-            System.in.read();
-        } catch (IOException e) {
-            System.err.println("Error leyendo la entrada: " + e.getMessage());
-        } finally {
-            server.stop();
-            System.out.println("Servidor detenido.");
-        }
+    private static <T> void printArray(T[] array) {
+        Arrays.stream(array).forEach(System.out::println);
     }
 }

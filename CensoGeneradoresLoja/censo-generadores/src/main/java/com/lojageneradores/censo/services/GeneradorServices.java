@@ -1,51 +1,41 @@
-package com.loja.censogeneradores.services;
+package com.lojageneradores.services;
 
-import com.loja.censogeneradores.dao.GeneradorDao;
-import com.loja.censogeneradores.models.Generador;
-import javax.ws.rs.*;
-import java.util.List;
+import com.lojageneradores.api.GeneradorApi;
+import com.lojageneradores.models.Generador;
+import com.lojageneradores.tda.list.LinkedList;
 
-@Path("/generador")
 public class GeneradorServices {
+    private final GeneradorApi generadorApi;
 
-    private GeneradorDao generadorDao = new GeneradorDao(); // DAO para interactuar con los generadores
-
-    // Método para agregar un nuevo generador
-    @POST
-    @Consumes("application/json")
-    @Produces("application/json")
-    public Generador agregarGenerador(Generador generador) {
-        return generadorDao.agregarGenerador(generador); // Se agrega el generador usando el DAO
+    public GeneradorServices() {
+        this.generadorApi = new GeneradorApi();
     }
 
-    // Método para obtener todos los generadores
-    @GET
-    @Produces("application/json")
-    public List<Generador> obtenerGeneradores() {
-        return generadorDao.obtenerTodosLosGeneradores(); // Se obtienen todos los generadores
+    public LinkedList<Generador> listarGeneradores() {
+        return generadorApi.listarGeneradores();
     }
 
-    // Método para obtener generadores por ID de casa
-    @GET
-    @Path("/casa/{casaId}")
-    @Produces("application/json")
-    public List<Generador> obtenerGeneradoresPorCasa(@PathParam("casaId") int casaId) {
-        return generadorDao.obtenerGeneradoresPorCasa(casaId); // Se obtienen los generadores para una casa específica
+    public boolean guardarGenerador(Generador generador) throws Exception {
+        return generadorApi.guardarGenerador(generador);
     }
 
-    // Método para actualizar la información de un generador
-    @PUT
-    @Path("/{id}")
-    @Consumes("application/json")
-    @Produces("application/json")
-    public Generador actualizarGenerador(@PathParam("id") int id, Generador generador) {
-        return generadorDao.actualizarGenerador(id, generador); // Se actualiza el generador en el DAO
+    public boolean actualizarGenerador(Generador generador) throws Exception {
+        return generadorApi.actualizarGenerador(generador);
     }
 
-    // Método para eliminar un generador por ID
-    @DELETE
-    @Path("/{id}")
-    public void eliminarGenerador(@PathParam("id") int id) {
-        generadorDao.eliminarGenerador(id); // Se elimina el generador usando el DAO
+    public boolean eliminarGenerador(Integer id) {
+        return generadorApi.eliminarGenerador(id);
+    }
+
+    public Generador buscarGeneradorPorId(Integer id) {
+        return generadorApi.buscarGeneradorPorId(id);
+    }
+
+    public LinkedList<Generador> buscarGeneradoresPorNombre(String nombre) {
+        return generadorApi.buscarGeneradoresPorNombre(nombre);
+    }
+
+    public Generador buscarGeneradorPorIdentificacion(String identificacion) {
+        return generadorApi.buscarGeneradorPorIdentificacion(identificacion);
     }
 }

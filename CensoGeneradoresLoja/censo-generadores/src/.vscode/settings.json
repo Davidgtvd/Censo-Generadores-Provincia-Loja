@@ -1,3 +1,27 @@
 {
-    "java.configuration.updateBuildConfiguration": "automatic"
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "java.format.settings.url": "./formatter.xml",
+    "java.format.settings.profile": "GoogleStyle",
+    "java.project.sourcePaths": [
+        "src/main/java"
+    ],
+    "java.project.outputPath": "bin",
+    "java.project.referencedLibraries": [
+        "libs/**/*.jar",
+        "path/to/gson.jar"
+    ],
+    "files.exclude": {
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/bin": true
+    },
+    "editor.formatOnSave": true,
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 1000,
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+    },
+    "java.dependency.packagePresentation": "hierarchical",
+    "java.debug.settings.hotCodeReplace": "manual"
 }

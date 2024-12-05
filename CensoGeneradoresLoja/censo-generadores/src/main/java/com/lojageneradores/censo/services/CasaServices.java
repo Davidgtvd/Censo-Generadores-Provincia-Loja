@@ -1,51 +1,33 @@
-package com.loja.censogeneradores.services;
+package com.lojageneradores.services;
 
-import com.loja.censogeneradores.dao.CasaDao;
-import com.loja.censogeneradores.models.Casa;
-import javax.ws.rs.*;
-import java.util.List;
+import com.lojageneradores.api.CasaApi;
+import com.lojageneradores.models.Casa;
+import com.lojageneradores.tda.list.LinkedList;
 
-@Path("/casa")
 public class CasaServices {
+    private final CasaApi casaApi;
 
-    private CasaDao casaDao = new CasaDao(); // DAO para interactuar con las casas
-
-    // Método para agregar una nueva casa
-    @POST
-    @Consumes("application/json")
-    @Produces("application/json")
-    public Casa agregarCasa(Casa casa) {
-        return casaDao.agregarCasa(casa); // Se agrega la casa usando el DAO
+    public CasaServices() {
+        this.casaApi = new CasaApi();
     }
 
-    // Método para obtener todas las casas
-    @GET
-    @Produces("application/json")
-    public List<Casa> obtenerCasas() {
-        return casaDao.obtenerTodasLasCasas(); // Se obtienen todas las casas
+    public LinkedList<Casa> listarCasas() {
+        return casaApi.listarCasas();
     }
 
-    // Método para obtener una casa específica por ID
-    @GET
-    @Path("/{id}")
-    @Produces("application/json")
-    public Casa obtenerCasaPorId(@PathParam("id") int id) {
-        return casaDao.obtenerCasaPorId(id); // Se obtiene la casa por su ID
+    public boolean guardarCasa(Casa casa) throws Exception {
+        return casaApi.guardarCasa(casa);
     }
 
-    // Método para actualizar la información de una casa
-    @PUT
-    @Path("/{id}")
-    @Consumes("application/json")
-    @Produces("application/json")
-    public Casa actualizarCasa(@PathParam("id") int id, Casa casa) {
-        return casaDao.actualizarCasa(id, casa); // Se actualiza la casa en el DAO
+    public boolean actualizarCasa(Casa casa) throws Exception {
+        return casaApi.actualizarCasa(casa);
     }
 
-    // Método para eliminar una casa por ID
-    @DELETE
-    @Path("/{id}")
-    public void eliminarCasa(@PathParam("id") int id) {
-        casaDao.eliminarCasa(id); // Se elimina la casa usando el DAO
+    public boolean eliminarCasa(Integer id) {
+        return casaApi.eliminarCasa(id);
+    }
+
+    public Casa buscarCasaPorId(Integer id) {
+        return casaApi.buscarCasaPorId(id);
     }
 }

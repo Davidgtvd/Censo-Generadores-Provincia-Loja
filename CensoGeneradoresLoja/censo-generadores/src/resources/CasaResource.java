@@ -11,20 +11,14 @@ import java.util.List;
 @Path("/casa")
 public class CasaResource {
 
-    private CasaService casaService = new CasaService();  // Suponiendo que ya tienes un servicio para Casa
+    private CasaService casaService = new CasaService();
 
-    /**
-     * Obtener todas las casas.
-     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Casa> getAllCasas() {
         return casaService.getAllCasas();
     }
 
-    /**
-     * Obtener una casa por su ID.
-     */
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -37,9 +31,6 @@ public class CasaResource {
         }
     }
 
-    /**
-     * Añadir una nueva casa.
-     */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)

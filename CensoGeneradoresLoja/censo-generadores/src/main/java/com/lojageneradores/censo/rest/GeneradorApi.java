@@ -1,50 +1,43 @@
-package com.lojageneradores.censo.rest;
+package com.lojageneradores.api;
 
-import com.lojageneradores.censo.models.Generador;
-import com.lojageneradores.censo.services.GeneradorService;
+import com.lojageneradores.dao.GeneradorDao;
+import com.lojageneradores.models.Generador;
+import com.lojageneradores.tda.list.LinkedList;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import java.util.List;
-
-@Path("/generador")
 public class GeneradorApi {
+    private final GeneradorDao generadorDao;
 
-    private GeneradorService generadorService = new GeneradorService();  // Instanciamos el servicio que maneja los generadores
-
-    /**
-     * Obtener todos los generadores.
-     */
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<Generador> getAllGeneradores() {
-        return generadorService.getAllGeneradores();  // Llamamos al servicio para obtener todos los generadores
+    public GeneradorApi() {
+        generadorDao = new GeneradorDao();
     }
 
-    /**
-     * Obtener un generador por su ID.
-     */
-    @GET
-    @Path("/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getGenerador(@PathParam("id") int id) {
-        Generador generador = generadorService.getGeneradorById(id);  // Llamamos al servicio para obtener el generador por ID
-        if (generador != null) {
-            return Response.ok(generador).build();  // Si existe, devolvemos la respuesta
-        } else {
-            return Response.status(Response.Status.NOT_FOUND).entity("Generador no encontrado").build();  // Si no existe
-        }
+    public LinkedList<Generador> listarGeneradores() {
+        return generadorDao.getListAll();
     }
 
-    /**
-     * Añadir un nuevo generador.
-     */
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response addGenerador(Generador generador) {
-        generadorService.addGenerador(generador);  // Llamamos al servicio para agregar el generador
-        return Response.status(Response.Status.CREATED).entity(generador).build();  // Devolvemos la respuesta con el código 201
+    public boolean guardarGenerador(Generador generador) throws Exception {
+        generadorDao.setServicio(generador);
+        return generadorDao.save();
+    }
+
+    public boolean actualizarGenerador(Generador generador) throws Exception {
+        generadorDao.setServicio(generador);
+        return generadorDao.update();
+    }
+
+    public boolean eliminarGenerador(Integer id) {
+        return generadorDao.eliminar(id);
+    }
+
+    public Generador buscarGeneradorPorId(Integer id) {
+        return generadorDao.buscar(id);
+    }
+
+    public LinkedList<Generador> buscarGeneradoresPorNombre(String nombre) {
+        return generadorDao.buscarPorNombre(nombre);
+    }
+
+    public Generador buscarGeneradorPorIdentificacion(String identificacion) {
+        return generadorDao.buscarPorIdentificacion(identificacion);
     }
 }

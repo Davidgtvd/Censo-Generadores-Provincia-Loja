@@ -11,20 +11,14 @@ import java.util.List;
 @Path("/generador")
 public class GeneradorResource {
 
-    private GeneradorService generadorService = new GeneradorService();  // Suponiendo que ya tienes un servicio para Generador
+    private GeneradorService generadorService = new GeneradorService();
 
-    /**
-     * Obtener todos los generadores.
-     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Generador> getAllGeneradores() {
         return generadorService.getAllGeneradores();
     }
 
-    /**
-     * Obtener un generador por su ID.
-     */
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -37,9 +31,6 @@ public class GeneradorResource {
         }
     }
 
-    /**
-     * Añadir un nuevo generador.
-     */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)

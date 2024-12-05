@@ -1,50 +1,35 @@
-package com.lojageneradores.censo.rest;
+package com.lojageneradores.api;
 
-import com.lojageneradores.censo.models.Casa;
-import com.lojageneradores.censo.services.CasaService;
+import com.lojageneradores.dao.CasaDao;
+import com.lojageneradores.models.Casa;
+import com.lojageneradores.tda.list.LinkedList;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import java.util.List;
-
-@Path("/casa")
 public class CasaApi {
+    private final CasaDao casaDao;
 
-    private CasaService casaService = new CasaService();  // Instanciamos el servicio que maneja las casas
-
-    /**
-     * Obtener todas las casas.
-     */
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<Casa> getAllCasas() {
-        return casaService.getAllCasas();  // Llamamos al servicio que obtiene las casas
+    public CasaApi() {
+        casaDao = new CasaDao();
     }
 
-    /**
-     * Obtener una casa por su ID.
-     */
-    @GET
-    @Path("/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getCasa(@PathParam("id") int id) {
-        Casa casa = casaService.getCasaById(id);  // Llamamos al servicio para obtener la casa por ID
-        if (casa != null) {
-            return Response.ok(casa).build();  // Si la casa existe, devolvemos la respuesta
-        } else {
-            return Response.status(Response.Status.NOT_FOUND).entity("Casa no encontrada").build();  // Si no existe
-        }
+    public LinkedList<Casa> listarCasas() {
+        return casaDao.getListAll();
     }
 
-    /**
-     * Añadir una nueva casa.
-     */
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response addCasa(Casa casa) {
-        casaService.addCasa(casa);  // Llamamos al servicio para agregar la casa
-        return Response.status(Response.Status.CREATED).entity(casa).build();  // Devolvemos la respuesta con el código 201
+    public boolean guardarCasa(Casa casa) throws Exception {
+        casaDao.setServicio(casa);
+        return casaDao.save();
+    }
+
+    public boolean actualizarCasa(Casa casa) throws Exception {
+        casaDao.setServicio(casa);
+        return casaDao.update();
+    }
+
+    public boolean eliminarCasa(Integer id) {
+        return casaDao.eliminar(id);
+    }
+
+    public Casa buscarCasaPorId(Integer id) {
+        return casaDao.buscar(id);
     }
 }

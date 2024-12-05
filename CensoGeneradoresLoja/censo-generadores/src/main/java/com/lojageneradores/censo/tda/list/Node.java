@@ -1,16 +1,14 @@
 package com.loja.censogeneradores.tda.list;
 
 public class Node<T> {
-    private T data; // Dato almacenado en el nodo (puede ser Casa, Generador, etc.)
-    private Node<T> next; // Referencia al siguiente nodo en la lista o cola
+    private T data;
+    private Node<T> next;
 
-    // Constructor
     public Node(T data) {
         this.data = data;
         this.next = null;
     }
 
-    // Getters y Setters
     public T getData() {
         return data;
     }

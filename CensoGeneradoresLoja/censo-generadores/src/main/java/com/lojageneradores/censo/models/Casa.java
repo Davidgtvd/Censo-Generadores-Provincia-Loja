@@ -1,20 +1,24 @@
-package com.example.rest.models;
+package com.lojageneradores.models;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-public class Censo {
-    @JsonProperty("direccion")
+public class Casa {
+    private Integer id;
     private String direccion;
+    private Integer numGeneradores;
 
-    @JsonProperty("num_generadores")
-    private int numGeneradores;
+    public Casa() {}
 
-    public Censo() {
-    }
-
-    public Censo(String direccion, int numGeneradores) {
+    public Casa(Integer id, String direccion, Integer numGeneradores) {
+        this.id = id;
         this.direccion = direccion;
         this.numGeneradores = numGeneradores;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getDireccion() {
@@ -25,19 +29,21 @@ public class Censo {
         this.direccion = direccion;
     }
 
-    public int getNumGeneradores() {
+    public Integer getNumGeneradores() {
         return numGeneradores;
     }
 
-    public void setNumGeneradores(int numGeneradores) {
+    public void setNumGeneradores(Integer numGeneradores) {
         this.numGeneradores = numGeneradores;
     }
 
     @Override
     public String toString() {
-        return "Censo{" +
-                "direccion='" + direccion + '\'' +
+        return "Casa{" +
+                "id=" + id +
+                ", direccion='" + direccion + '\'' +
                 ", numGeneradores=" + numGeneradores +
                 '}';
     }
 }
+

@@ -1,8 +1,8 @@
 package com.loja.censogeneradores.tda.list;
 
 class Node<T> {
-    private T data;  
-    private Node<T> next;  
+    private T data;
+    private Node<T> next;
 
     public Node(T data) {
         this.data = data;
@@ -27,9 +27,9 @@ class Node<T> {
 }
 
 public class LinkedList<T> {
-    private Node<T> head; 
-    private int size; 
-    // Constructor
+    private Node<T> head;
+    private int size;
+
     public LinkedList() {
         head = null;
         size = 0;
@@ -101,8 +101,7 @@ public class LinkedList<T> {
     }
 
     public void toList(T[] items) {
-        head = null;
-        size = 0;
+        reset(); // Reinicia la lista antes de agregar nuevos elementos
         for (T item : items) {
             add(item);
         }

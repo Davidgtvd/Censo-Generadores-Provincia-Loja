@@ -1,47 +1,59 @@
-package com.loja.censogeneradores.model;
-
-import com.loja.censogeneradores.enumerator.TipoEquipo;
+package com.lojageneradores.models;
 
 public class Generador {
+    private Integer id;
+    private String nombre;
+    private String identificacion;
+    private Integer capacidad;
 
-    private String idGenerador;        // ID único del generador
-    private TipoEquipo tipoEquipo;     // Tipo de generador (eléctrico, eólico, solar, etc.)
-    private String descripcion;        // Descripción o características del generador
+    public Generador() {}
 
-    // Constructor
-    public Generador(String idGenerador, TipoEquipo tipoEquipo, String descripcion) {
-        this.idGenerador = idGenerador;
-        this.tipoEquipo = tipoEquipo;
-        this.descripcion = descripcion;
+    public Generador(Integer id, String nombre, String identificacion, Integer capacidad) {
+        this.id = id;
+        this.nombre = nombre;
+        this.identificacion = identificacion;
+        this.capacidad = capacidad;
     }
 
-    // Getters y Setters
-    public String getIdGenerador() {
-        return idGenerador;
+    public Integer getId() {
+        return id;
     }
 
-    public void setIdGenerador(String idGenerador) {
-        this.idGenerador = idGenerador;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public TipoEquipo getTipoEquipo() {
-        return tipoEquipo;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setTipoEquipo(TipoEquipo tipoEquipo) {
-        this.tipoEquipo = tipoEquipo;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public String getIdentificacion() {
+        return identificacion;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setIdentificacion(String identificacion) {
+        this.identificacion = identificacion;
+    }
+
+    public Integer getCapacidad() {
+        return capacidad;
+    }
+
+    public void setCapacidad(Integer capacidad) {
+        this.capacidad = capacidad;
     }
 
     @Override
     public String toString() {
-        return "Generador [ID: " + idGenerador + ", Tipo: " + tipoEquipo.getNombre() + ", Descripción: " + descripcion + "]";
+        return "Generador{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", identificacion='" + identificacion + '\'' +
+                ", capacidad=" + capacidad +
+                '}';
     }
 }
