@@ -9,6 +9,13 @@
     <version>1.0-SNAPSHOT</version>
     <name>censo-generadores</name>
 
+    <properties>
+        <jersey.version>3.1.2</jersey.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+    </properties>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -26,6 +33,7 @@
         <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
             <artifactId>jersey-container-grizzly2-http</artifactId>
+            <version>${jersey.version}</version>
         </dependency>
 
         <!-- Jersey Core -->
@@ -40,7 +48,6 @@
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-json-jackson</artifactId>
             <version>${jersey.version}</version>
-            <scope>runtime</scope>
         </dependency>
 
         <!-- Jakarta JAXB -->
@@ -77,7 +84,7 @@
             <version>2.11.0</version>
         </dependency>
 
-        <!-- Lombok (para simplificar POJOs como 'Generador') -->
+        <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -88,35 +95,28 @@
 
     <build>
         <plugins>
-            <!-- Maven Compiler Plugin para Java 21 -->
+            <!-- Maven Compiler Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.10.1</version>
                 <configuration>
-                    <source>21</source>
-                    <target>21</target>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
                 </configuration>
             </plugin>
 
-            <!-- Exec Maven Plugin para ejecutar la clase Main -->
+            <!-- Exec Maven Plugin -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
-                <version>3.0.0</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>java</goal>
-                        </goals>
-                    </execution>
-                </executions>
+                <version>3.1.0</version>
                 <configuration>
                     <mainClass>com.lojageneradores.censo.Main</mainClass>
                 </configuration>
             </plugin>
 
-            <!-- Surefire Plugin para ejecutar las pruebas con JUnit 5 -->
+            <!-- Surefire Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -127,11 +127,6 @@
             </plugin>
         </plugins>
     </build>
-
-    <properties>
-        <jersey.version>3.1.2</jersey.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
 
     <repositories>
         <repository>

@@ -20,7 +20,7 @@
     "files.autoSave": "afterDelay",
     "files.autoSaveDelay": 1000,
     "editor.codeActionsOnSave": {
-        "source.organizeImports": true
+        "source.organizeImports": "explicit"
     },
     "java.dependency.packagePresentation": "hierarchical",
     "java.debug.settings.hotCodeReplace": "manual"

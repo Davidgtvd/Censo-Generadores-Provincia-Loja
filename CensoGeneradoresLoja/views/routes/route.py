@@ -25,103 +25,101 @@ def home():
 def admin():
     return render_template('fragmento/inicial/admin.html')
 
-@router.route('/admin/person/register')
-def view_register_person():
-    url = "http://localhost:8099/api/person/listType"
+@router.route('/admin/generator/register')
+def view_register_generator():
+    url = "http://localhost:8099/api/generator/listType"
     data = make_request('GET', url)
     if data:
-        return render_template('fragmento/persona/registro.html', lista=data["data"])
-    flash("Error al cargar los datos de tipo de persona.", category='error')
+        return render_template('fragmento/generador/registro.html', lista=data["data"])
+    flash("Error al cargar los datos de tipo de generador.", category='error')
     return redirect('/')
 
-@router.route('/admin/person/search/<criterio>/<texto>')
-def view_buscar_person(criterio, texto):
-    base_url = "http://localhost:8099/api/person/list/search/"
-    if criterio == 'apellidos':
+@router.route('/admin/generator/search/<criterio>/<texto>')
+def view_search_generator(criterio, texto):
+    base_url = "http://localhost:8099/api/generator/list/search/"
+    if criterio == 'name':
         url = base_url + texto
-    elif criterio == 'dni':
+    elif criterio == 'id':
         url = base_url + "ident/" + texto
     else:
         flash("Criterio de búsqueda inválido.", category='error')
-        return redirect('/admin/person/list')
+        return redirect('/admin/generator/list')
 
     data = make_request('GET', url)
     if data:
         lista = data["data"]
         if isinstance(lista, dict):  # Si el resultado es un dict, lo transformamos en una lista
             lista = [lista]
-        return render_template('fragmento/persona/lista.html', lista=lista)
-    flash("Error al buscar personas.", category='error')
-    return redirect('/admin/person/list')
+        return render_template('fragmento/generador/lista.html', lista=lista)
+    flash("Error al buscar generadores.", category='error')
+    return redirect('/admin/generator/list')
 
-@router.route('/admin/person/order/<atributo>/<tipo>')
-def view_order_person(atributo, tipo):
-    url = f"http://localhost:8099/api/person/list/order/{atributo}/{tipo}"
+@router.route('/admin/generator/order/<atributo>/<tipo>')
+def view_order_generator(atributo, tipo):
+    url = f"http://localhost:8099/api/generator/list/order/{atributo}/{tipo}"
     data = make_request('GET', url)
     if data:
-        return render_template('fragmento/persona/lista.html', lista=data["data"])
-    flash("Error al ordenar la lista de personas.", category='error')
-    return redirect('/admin/person/list')
+        return render_template('fragmento/generador/lista.html', lista=data["data"])
+    flash("Error al ordenar la lista de generadores.", category='error')
+    return redirect('/admin/generator/list')
 
-@router.route('/admin/person/edit/<id>')
-def view_edit_person(id):
-    tipo_url = "http://localhost:8099/api/person/listType"
-    person_url = f"http://localhost:8099/api/person/get/{id}"
+@router.route('/admin/generator/edit/<id>')
+def view_edit_generator(id):
+    tipo_url = "http://localhost:8099/api/generator/listType"
+    generator_url = f"http://localhost:8099/api/generator/get/{id}"
 
     tipo_data = make_request('GET', tipo_url)
-    person_data = make_request('GET', person_url)
+    generator_data = make_request('GET', generator_url)
 
-    if tipo_data and person_data:
-        return render_template('fragmento/persona/editar.html', lista=tipo_data["data"], person=person_data["data"])
-    flash("Error al cargar los datos de la persona para edición.", category='error')
-    return redirect('/admin/person/list')
+    if tipo_data and generator_data:
+        return render_template('fragmento/generador/editar.html', lista=tipo_data["data"], generator=generator_data["data"])
+    flash("Error al cargar los datos del generador para edición.", category='error')
+    return redirect('/admin/generator/list')
 
-@router.route('/admin/person/list')
-def list_person():
-    url = "http://localhost:8099/api/person/list"
+@router.route('/admin/generator/list')
+def list_generators():
+    url = "http://localhost:8099/api/generator/list"
     data = make_request('GET', url)
     if data:
-        return render_template('fragmento/persona/lista.html', lista=data["data"])
-    flash("Error al cargar la lista de personas.", category='error')
-    return render_template('fragmento/persona/lista.html', lista=[])
+        return render_template('fragmento/generador/lista.html', lista=data["data"])
+    flash("Error al cargar la lista de generadores.", category='error')
+    return render_template('fragmento/generador/lista.html', lista=[])
 
-@router.route('/admin/person/save', methods=["POST"])
-def save_person():
+@router.route('/admin/generator/save', methods=["POST"])
+def save_generator():
     headers = {'Content-Type': 'application/json'}
     form = request.form
     dataF = {
-        "tipo": form["tipo"],
-        "apellidos": form["ape"],
-        "nombres": form["nom"],
-        "identificacion": form["iden"],
-        "direccion": form["dir"],
-        "fono": form["fono"]
+        "type": form["type"],
+        "name": form["name"],
+        "id": form["id"],
+        "location": form["location"],
+        "contact": form["contact"]
     }
-    url = "http://localhost:8099/api/person/save"
+    url = "http://localhost:8099/api/generator/save"
     response = make_request('POST', url, data=dataF, headers=headers)
     if response:
-        flash("Persona guardada correctamente.", category='info')
+        flash("Generador guardado correctamente.", category='info')
     else:
-        flash("Error al guardar la persona.", category='error')
-    return redirect('/admin/person/list')
+        flash("Error al guardar el generador.", category='error')
+    return redirect('/admin/generator/list')
 
-@router.route('/admin/person/update', methods=["POST"])
-def update_person():
+@router.route('/admin/generator/update', methods=["POST"])
+def update_generator():
     headers = {'Content-Type': 'application/json'}
     form = request.form
     dataF = {
         "id": form["id"],
-        "tipo": form["tipo"],
-        "apellidos": form["ape"],
-        "nombres": form["nom"],
-        "identificacion": form["iden"],
-        "direccion": form["dir"],
-        "fono": form["fono"]
+        "type": form["type"],
+        "name": form["name"],
+        "id": form["id"],
+        "location": form["location"],
+        "contact": form["contact"]
     }
-    url = "http://localhost:8099/api/person/update"
+    url = "http://localhost:8099/api/generator/update"
     response = make_request('POST', url, data=dataF, headers=headers)
     if response:
-        flash("Persona actualizada correctamente.", category='info')
+        flash("Generador actualizado correctamente.", category='info')
     else:
-        flash("Error al actualizar la persona.", category='error')
-    return redirect('/admin/person/list')
+        flash("Error al actualizar el generador.", category='error')
+    return redirect('/admin/generator/list')

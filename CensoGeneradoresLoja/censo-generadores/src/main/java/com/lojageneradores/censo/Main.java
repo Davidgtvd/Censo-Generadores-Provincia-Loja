@@ -1,14 +1,11 @@
 package com.lojageneradores.censo;
 
-import com.lojageneradores.censo.tda.utils.SortUtils;
-import com.lojageneradores.censo.tda.list.SearchUtils;
 import com.lojageneradores.censo.models.Generador;
-
-import java.util.Arrays;
+import com.lojageneradores.censo.tda.SortUtils;
+import com.lojageneradores.censo.tda.SearchUtils;
 
 public class Main {
     public static void main(String[] args) {
-        
         Generador[] generadores = {
             new Generador("Generador A", 1000),
             new Generador("Generador B", 750),
@@ -24,7 +21,7 @@ public class Main {
         printArray(generadores);
 
         System.out.println("\nBuscando el generador con capacidad 750...");
-        int index = SearchUtils.binarySearch(generadores, new Generador(null, 750));
+        int index = SearchUtils.binarySearch(generadores, 750);
         if (index != -1) {
             System.out.println("Generador encontrado: " + generadores[index]);
         } else {
@@ -32,7 +29,7 @@ public class Main {
         }
 
         System.out.println("\nBuscando un generador con capacidad 2000...");
-        index = SearchUtils.binarySearch(generadores, new Generador(null, 2000));
+        index = SearchUtils.binarySearch(generadores, 2000);
         if (index != -1) {
             System.out.println("Generador encontrado: " + generadores[index]);
         } else {
@@ -40,7 +37,9 @@ public class Main {
         }
     }
 
-    private static <T> void printArray(T[] array) {
-        Arrays.stream(array).forEach(System.out::println);
+    private static void printArray(Generador[] array) {
+        for (Generador generador : array) {
+            System.out.println(generador);
+        }
     }
 }
