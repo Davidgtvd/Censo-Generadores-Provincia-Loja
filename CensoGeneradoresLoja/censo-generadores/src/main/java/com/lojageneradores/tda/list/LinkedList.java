@@ -1,6 +1,11 @@
-package com.loja.censogeneradores.tda.list;
+package com.lojageneradores.tda.list;
+
+import java.lang.reflect.Array;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 class Node<T> {
+
     private T data;
     private Node<T> next;
 
@@ -26,7 +31,8 @@ class Node<T> {
     }
 }
 
-public class LinkedList<T> {
+public class LinkedList<T extends Comparable<T>> implements Iterable<T> {
+
     private Node<T> head;
     private int size;
 
@@ -36,6 +42,10 @@ public class LinkedList<T> {
     }
 
     public void add(T data) {
+        if (data == null) {
+            throw new IllegalArgumentException("No se pueden agregar elementos nulos");
+        }
+
         Node<T> newNode = new Node<>(data);
         if (head == null) {
             head = newNode;
@@ -54,7 +64,12 @@ public class LinkedList<T> {
     }
 
     public T[] toArray() {
-        T[] array = (T[]) new Object[size];
+        if (size == 0) {
+            return null;
+        }
+
+        @SuppressWarnings("unchecked")
+        T[] array = (T[]) Array.newInstance(head.getData().getClass(), size);
         Node<T> current = head;
         int i = 0;
         while (current != null) {
@@ -66,8 +81,9 @@ public class LinkedList<T> {
 
     public T get(int index) {
         if (index < 0 || index >= size) {
-            return null;
+            throw new IndexOutOfBoundsException("Índice fuera de rango");
         }
+
         Node<T> current = head;
         for (int i = 0; i < index; i++) {
             current = current.getNext();
@@ -77,8 +93,9 @@ public class LinkedList<T> {
 
     public void remove(int index) {
         if (index < 0 || index >= size) {
-            return;
+            throw new IndexOutOfBoundsException("Índice fuera de rango");
         }
+
         if (index == 0) {
             head = head.getNext();
         } else {
@@ -101,7 +118,7 @@ public class LinkedList<T> {
     }
 
     public void toList(T[] items) {
-        reset(); // Reinicia la lista antes de agregar nuevos elementos
+        reset();
         for (T item : items) {
             add(item);
         }
@@ -109,12 +126,70 @@ public class LinkedList<T> {
 
     public void update(T object, int index) {
         if (index < 0 || index >= size) {
-            return;
+            throw new IndexOutOfBoundsException("Índice fuera de rango");
         }
+
         Node<T> current = head;
         for (int i = 0; i < index; i++) {
             current = current.getNext();
         }
         current.setData(object);
+    }
+
+    public void sort() {
+        if (size > 1) {
+            for (int i = 0; i < size - 1; i++) {
+                Node<T> current = head;
+                Node<T> next = head.getNext();
+                for (int j = 0; j < size - 1 - i; j++) {
+                    if (current.getData().compareTo(next.getData()) > 0) {
+                        T temp = current.getData();
+                        current.setData(next.getData());
+                        next.setData(temp);
+                    }
+                    current = next;
+                    next = next.getNext();
+                }
+            }
+        }
+    }
+
+    public int search(T data) {
+        Node<T> current = head;
+        int index = 0;
+        while (current != null) {
+            if (current.getData().equals(data)) {
+                return index;
+            }
+            current = current.getNext();
+            index++;
+        }
+        return -1;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
+            private Node<T> current = head;
+
+            @Override
+            public boolean hasNext() {
+                return current != null;
+            }
+
+            @Override
+            public T next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+                T data = current.getData();
+                current = current.getNext();
+                return data;
+            }
+        };
+    }
+
+    public int indexOf(T data) {
+        return search(data);
     }
 }

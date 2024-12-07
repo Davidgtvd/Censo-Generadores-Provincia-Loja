@@ -1,10 +1,11 @@
 package com.lojageneradores.censo;
 
-import com.lojageneradores.censo.models.Generador;
-import com.lojageneradores.censo.tda.SortUtils;
-import com.lojageneradores.censo.tda.SearchUtils;
+import com.lojageneradores.censo.utils.SearchUtils; // Corregir importación
+import com.lojageneradores.censo.utils.SortUtils;
+import com.lojageneradores.models.Generador;
 
 public class Main {
+
     public static void main(String[] args) {
         Generador[] generadores = {
             new Generador("Generador A", 1000),

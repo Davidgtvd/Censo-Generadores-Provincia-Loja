@@ -1,4 +1,4 @@
-package com.loja.censogeneradores.enumerator;
+package com.lojageneradores.censo.enumerator;
 
 public enum TipoIdentificacion {
     CEDULA("Cédula de Identidad"),

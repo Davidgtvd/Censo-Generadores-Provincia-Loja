@@ -1,18 +1,17 @@
 {
-    "version": "0.2.0",
-    "configurations": [
+  "version": "0.2.0",
+  "configurations": [
       {
-        "type": "java",
-        "name": "Debug (Launch) - Main",
-        "request": "launch",
-        "mainClass": "com.lojageneradores.censo.Main",  // Asegúrate de que esta sea tu clase principal
-        "projectName": "censo-generadores-loja",       // Asegúrate de que este sea el nombre de tu proyecto Maven
-        "args": "",
-        "env": {},
-        "cwd": "${workspaceFolder}",
-        "console": "integratedTerminal",
-        "preLaunchTask": "java: compile and launch"
+          "type": "java",
+          "name": "Launch Java",
+          "request": "launch",
+          "mainClass": "com.lojageneradores.censo.Main",
+          "projectName": "censo-generadores",
+          "args": "",
+          "env": {},
+          "envFile": "${workspaceFolder}/.env",
+          "cwd": "${workspaceFolder}",
+          "console": "integratedTerminal"
       }
-    ]
-  }
-  
+  ]
+}

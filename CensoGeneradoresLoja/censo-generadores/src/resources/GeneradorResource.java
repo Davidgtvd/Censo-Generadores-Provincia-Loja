@@ -2,21 +2,22 @@ package com.lojageneradores.censo.rest;
 
 import com.lojageneradores.censo.models.Generador;
 import com.lojageneradores.censo.services.GeneradorService;
+import com.lojageneradores.censo.services.GeneradorService;
 
 import javax.ws.rs.*;
+import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
 
 @Path("/generador")
 public class GeneradorResource {
 
-    private GeneradorService generadorService = new GeneradorService();
+    private final GeneradorService generadorService = new GeneradorService();
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Generador> getAllGeneradores() {
-        return generadorService.getAllGeneradores();
+    public Response getAllGeneradores() {
+        return Response.ok(generadorService.getAllGeneradores()).build();
     }
 
     @GET

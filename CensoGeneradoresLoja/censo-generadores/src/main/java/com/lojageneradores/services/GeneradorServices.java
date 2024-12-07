@@ -1,6 +1,6 @@
 package com.lojageneradores.services;
 
-import com.lojageneradores.api.GeneradorApi;
+import com.lojageneradores.api.GeneradorApi; // Ensure this import is correct and the class exists in the specified package
 import com.lojageneradores.models.Generador;
 import com.lojageneradores.tda.list.LinkedList;
 

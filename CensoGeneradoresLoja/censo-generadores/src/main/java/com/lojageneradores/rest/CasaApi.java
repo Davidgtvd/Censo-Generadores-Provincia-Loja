@@ -1,26 +1,27 @@
-package com.lojageneradores.api;
 
 import com.lojageneradores.dao.CasaDao;
 import com.lojageneradores.models.Casa;
-import com.lojageneradores.tda.list.LinkedList;
+import com.lojageneradores.respuesta.Respuesta;
+import com.lojageneradores.tda.Lista;
 
 public class CasaApi {
+
+    public static void main(String[] args) {
+        // You can add code here to test the CasaApi class
+    }
+
     private final CasaDao casaDao;
 
     public CasaApi() {
         casaDao = new CasaDao();
     }
 
-    public LinkedList<Casa> listarCasas() {
-        return casaDao.getListAll();
-    }
-
-    public boolean guardarCasa(Casa casa) throws Exception {
+    public boolean guardarCasa(Casa casa) {
         casaDao.setServicio(casa);
         return casaDao.save();
     }
 
-    public boolean actualizarCasa(Casa casa) throws Exception {
+    public boolean actualizarCasa(Casa casa) {
         casaDao.setServicio(casa);
         return casaDao.update();
     }

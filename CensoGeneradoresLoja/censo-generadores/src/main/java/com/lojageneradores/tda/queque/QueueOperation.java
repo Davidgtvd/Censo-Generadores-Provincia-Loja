@@ -1,20 +1,22 @@
-package com.loja.censogeneradores.tda.queue;
+package com.lojageneradores.tda.queque;
 
-import com.loja.censogeneradores.tda.queue.Queue;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class QueueOperation<T> {
-    private Queue<T> queue;
+
+    private final Queue<T> queue;
 
     public QueueOperation() {
-        queue = new Queue<>();
+        queue = new LinkedList<>();
     }
 
     public void enqueue(T data) {
-        queue.enqueue(data);
+        queue.add(data);
     }
 
     public T dequeue() {
-        return queue.dequeue();
+        return queue.poll();
     }
 
     public T peek() {
@@ -30,20 +32,18 @@ public class QueueOperation<T> {
     }
 
     public void clear() {
-        while (!queue.isEmpty()) {
-            queue.dequeue();
-        }
+        queue.clear();
     }
 
     public void displayQueue() {
-        Queue<T> tempQueue = new Queue<>();
+        Queue<T> tempQueue = new LinkedList<>();
         while (!queue.isEmpty()) {
-            T data = queue.dequeue();
+            T data = queue.poll();
             System.out.println(data);
-            tempQueue.enqueue(data);
+            tempQueue.add(data);
         }
         while (!tempQueue.isEmpty()) {
-            queue.enqueue(tempQueue.dequeue());
+            queue.add(tempQueue.poll());
         }
     }
 }

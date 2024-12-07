@@ -1,6 +1,7 @@
-package com.lojageneradores.censo.rest;
+package com.lojageneradores.rest;
 
 public class OperacionesSistema {
+
     public static int busquedaSecuencial(Registro[] registros, int id) {
         for (int i = 0; i < registros.length; i++) {
             if (registros[i].getId() == id) {

@@ -1,6 +1,7 @@
-package com.lojageneradores.censo.rest;
+package com.lojageneradores.rest;
 
 public class Registro {
+
     private int id;
     private String nombre;
 

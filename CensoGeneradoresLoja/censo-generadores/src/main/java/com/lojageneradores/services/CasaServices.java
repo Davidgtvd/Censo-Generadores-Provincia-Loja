@@ -1,10 +1,11 @@
 package com.lojageneradores.services;
 
-import com.lojageneradores.api.CasaApi;
+import com.lojageneradores.models.CasaApi;
 import com.lojageneradores.models.Casa;
 import com.lojageneradores.tda.list.LinkedList;
 
 public class CasaServices {
+
     private final CasaApi casaApi;
 
     public CasaServices() {

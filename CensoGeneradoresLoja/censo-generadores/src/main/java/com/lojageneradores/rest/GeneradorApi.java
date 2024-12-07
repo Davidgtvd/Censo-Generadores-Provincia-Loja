@@ -1,17 +1,19 @@
-package com.lojageneradores.api;
+package com.lojageneradores.rest;
 
 import com.lojageneradores.dao.GeneradorDao;
 import com.lojageneradores.models.Generador;
 import com.lojageneradores.tda.list.LinkedList;
+// import java.util.LinkedList as JavaLinkedList;
 
 public class GeneradorApi {
+
     private final GeneradorDao generadorDao;
 
     public GeneradorApi() {
         generadorDao = new GeneradorDao();
     }
 
-    public LinkedList<Generador> listarGeneradores() {
+    public java.util.LinkedList<Generador> listarGeneradores() {
         return generadorDao.getListAll();
     }
 
@@ -33,7 +35,7 @@ public class GeneradorApi {
         return generadorDao.buscar(id);
     }
 
-    public LinkedList<Generador> buscarGeneradoresPorNombre(String nombre) {
+    public com.lojageneradores.tda.list.LinkedList<Generador> buscarGeneradoresPorNombre(String nombre) {
         return generadorDao.buscarPorNombre(nombre);
     }
 

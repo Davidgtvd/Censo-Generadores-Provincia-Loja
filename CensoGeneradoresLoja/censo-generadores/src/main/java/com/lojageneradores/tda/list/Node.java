@@ -1,6 +1,7 @@
-package com.loja.censogeneradores.tda.list;
+package com.lojageneradores.tda.list;
 
 public class Node<T> {
+
     private T data;
     private Node<T> next;
 
