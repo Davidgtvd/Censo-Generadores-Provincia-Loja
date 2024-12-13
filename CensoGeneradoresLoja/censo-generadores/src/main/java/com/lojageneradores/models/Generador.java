@@ -7,14 +7,20 @@ public class Generador implements Comparable<Generador> {
     private Integer id;
     private String nombre;
     private int capacidad;
+    private String identificacion;
 
     public Generador() {
-        this("", 0);
+        this("", 0, null);
     }
 
     public Generador(String nombre, int capacidad) {
+        this(nombre, capacidad, null);
+    }
+
+    public Generador(String nombre, int capacidad, String identificacion) {
         this.nombre = nombre;
         this.capacidad = capacidad;
+        this.identificacion = identificacion;
     }
 
     public Integer getId() {
@@ -41,12 +47,21 @@ public class Generador implements Comparable<Generador> {
         this.capacidad = capacidad;
     }
 
+    public String getIdentificacion() {
+        return identificacion;
+    }
+
+    public void setIdentificacion(String identificacion) {
+        this.identificacion = identificacion;
+    }
+
     @Override
     public String toString() {
         return "Generador{"
                 + "id=" + id
                 + ", nombre='" + nombre + '\''
                 + ", capacidad=" + capacidad
+                + ", identificacion='" + identificacion + '\''
                 + '}';
     }
 
@@ -66,11 +81,12 @@ public class Generador implements Comparable<Generador> {
         Generador generador = (Generador) o;
         return capacidad == generador.capacidad
                 && Objects.equals(id, generador.id)
-                && Objects.equals(nombre, generador.nombre);
+                && Objects.equals(nombre, generador.nombre)
+                && Objects.equals(identificacion, generador.identificacion);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nombre, capacidad);
+        return Objects.hash(id, nombre, capacidad, identificacion);
     }
 }

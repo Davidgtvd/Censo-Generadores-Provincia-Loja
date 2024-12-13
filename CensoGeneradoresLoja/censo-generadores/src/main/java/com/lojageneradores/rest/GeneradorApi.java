@@ -1,9 +1,8 @@
 package com.lojageneradores.rest;
 
-import com.lojageneradores.dao.GeneradorDao;
+import com.lojageneradores.censo.dao.GeneradorDao;
 import com.lojageneradores.models.Generador;
 import com.lojageneradores.tda.list.LinkedList;
-// import java.util.LinkedList as JavaLinkedList;
 
 public class GeneradorApi {
 
@@ -13,16 +12,16 @@ public class GeneradorApi {
         generadorDao = new GeneradorDao();
     }
 
-    public java.util.LinkedList<Generador> listarGeneradores() {
-        return generadorDao.getListAll();
+    public LinkedList<Generador> listarGeneradores() {
+        return generadorDao.listar();
     }
 
-    public boolean guardarGenerador(Generador generador) throws Exception {
+    public boolean guardarGenerador(Generador generador) {
         generadorDao.setServicio(generador);
         return generadorDao.save();
     }
 
-    public boolean actualizarGenerador(Generador generador) throws Exception {
+    public boolean actualizarGenerador(Generador generador) {
         generadorDao.setServicio(generador);
         return generadorDao.update();
     }
@@ -35,11 +34,28 @@ public class GeneradorApi {
         return generadorDao.buscar(id);
     }
 
-    public com.lojageneradores.tda.list.LinkedList<Generador> buscarGeneradoresPorNombre(String nombre) {
+    public LinkedList<Generador> buscarGeneradoresPorNombre(String nombre) {
         return generadorDao.buscarPorNombre(nombre);
     }
 
-    public Generador buscarGeneradorPorIdentificacion(String identificacion) {
-        return generadorDao.buscarPorIdentificacion(identificacion);
+    public Generador buscarGeneradorPorIdentificacion(String nombre) {
+        for (Generador generador : generadorDao.listar()) {
+            if (generador.getNombre() != null
+                    && generador.getNombre().equalsIgnoreCase(nombre)) {
+                return generador;
+            }
+        }
+        return null;
+    }
+
+    public java.util.LinkedList<Generador> listarGeneradoresComoJavaList() {
+        LinkedList<Generador> listaPersonalizada = generadorDao.listar();
+        java.util.LinkedList<Generador> listaJava = new java.util.LinkedList<>();
+
+        for (Generador generador : listaPersonalizada) {
+            listaJava.add(generador);
+        }
+
+        return listaJava;
     }
 }
