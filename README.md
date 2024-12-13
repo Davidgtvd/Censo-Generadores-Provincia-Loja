@@ -1,5 +1,8 @@
 # Censo-Generadores-Provincia-Loja
 
 
-Uploading WhatsApp Video 2024-12-12 at 21.48.16.mp4…
+https://github.com/user-attachments/assets/730e112d-2c47-4c5e-9ede-4520666ec0dd
+
+
+
 
